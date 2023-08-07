@@ -33,3 +33,42 @@ bool has_whitespace_start_and_end(std::string filepath) {
     return startsWithWhitespace && endsWithWhitespace;
 }
 
+int get_line_count(std::string filepath) {
+    std::ifstream file(filepath);
+    if (!file.is_open()) {
+        std::cerr << "Error opening file: " << filepath << std::endl;
+        return -1;
+    }
+
+    int lineCount = 0;
+    std::string line;
+    
+    while (std::getline(file, line)) {
+        lineCount++;
+    }
+
+    file.close();
+
+    return lineCount;
+}
+
+std::string get_file_head(std::string filepath) {
+    std::ifstream file(filepath);
+    if (!file.is_open()) {
+        std::cerr << "Error opening file: " << filepath << std::endl;
+        return "";
+    }
+
+    int lineCount = 5;
+    std::string head = "";
+    std::string line;
+    
+    while (std::getline(file, line) && lineCount >= 0) {
+        head.append(line+"\n");
+        lineCount--;
+    }
+
+    file.close();
+
+    return head;
+}
